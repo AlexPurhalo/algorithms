@@ -2,71 +2,7 @@
 const allTunnels = [
 	{
 		id: 1,
-		diamond: false,
-		tunnels: [
-			{
-				id: 2,
-				diamond: true,
-				tunnels: [
-					{
-						id: 3,
-						diamond: false,
-						tunnels: [
-							{
-								id: 4,
-								diamond: false,
-								tunnels: [
-									{
-										id: 5,
-										diamond: false
-									},
-									{
-										id: 6,
-										diamond: true
-									},
-									{
-										id: 7,
-										diamond: false,
-									}
-								]
-							},
-							{
-								id: 8,
-								diamond: false
-							},
-							{
-								id: 9,
-								diamond: false,
-								tunnels: [
-									{
-										id: 10,
-										diamond: false,
-									}
-								]
-							}
-						]
-					},
-					{
-						id: 11,
-						diamond: false
-					}
-				]
-			},
-			{
-				id: 12,
-				diamond: true,
-				tunnels: [
-					{
-						id: 13,
-						diamond: false
-					}
-				]
-			},
-			{
-				id: 14,
-				diamond: false
-			}
-		]
+		diamond: false
 	},
 	{
 		id: 15,
@@ -90,7 +26,9 @@ const findITemById = (initItems, id, items) => {
 	const goToNext = (p) => p.map((item, i) => i === p.length-1 ? item+1 : item)
 	
 	// Conditions
-	const isExactItem  = (item, currId) => item['id'] === currId
+	const isExactItem  = (item, currId) => {
+		return item['id'] === currId
+	}
 	const hasItems     = (item) => item[items]
 	const isItemExist  = (parItem, p) => parItem[items][p[p.length-1]]
 	const areInitItems = (p) => p.length <= 3
@@ -98,6 +36,7 @@ const findITemById = (initItems, id, items) => {
 	
 	// Function
 	const findItem = (currItems, currId, position) => {
+		
 		const currItem = currItems[position[position.length-1]]
 		
 		if (isExactItem(currItem, currId)) return currItem
@@ -109,12 +48,21 @@ const findITemById = (initItems, id, items) => {
 			return findItem(currItem[items], currId, position)
 		}
 		
+		
+		
+		
+		
 		if (areInitItems(position)) {
 			position = goBack(position)
-			position = goBack(position)
+			
+			if (position.length > 1) {
+				position = goBack(position)
+			}
+			
 			position = goToNext(position)
 			
 			if (isOverSearch(position)) return -1
+			
 			
 			const nextItem = initItems[position[position.length-1]]
 			
@@ -145,6 +93,6 @@ const findITemById = (initItems, id, items) => {
 	return findItem(initItems, id, [0])
 }
 
-console.log(findITemById(allTunnels, 8, 'tunnels'))
-console.log(findITemById(allTunnels, 16, 'tunnels'))
-console.log(findITemById(allTunnels, 18, 'tunnels'))
+console.log(findITemById(allTunnels, 1, 'tunnels'))
+// console.log(findITemById(allTunnels, 16, 'tunnels'))
+// console.log(findITemById(allTunnels, 18, 'tunnels'))
